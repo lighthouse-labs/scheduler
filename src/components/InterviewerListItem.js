@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
-import InterviewerListItem from "./InterviewerListItem";
+import "components/InterviewerListItem.scss";
+//import InterviewerListItem from "./InterviewerListItem";
 
 const info = (
   <li class="interviewers__item">
@@ -9,23 +10,25 @@ const info = (
       src="https://i.imgur.com/LpaY82x.png"
       alt="Sylvia Palmer"
     />
-    Sylvia Palmer
   </li>
 );
 
 export default function(props) {
-  const interviewerItem = classnames("interviewers__item", {
-    "interviewers__item--selected": props.selected,
-    "interviewers__item-image": props.image,
+  const interviewerItemClass = classnames("interviewers__item", {
+    "interviewers__item--selected": props.selected
+  });
+  const interviewerItemImageClass = classnames("interviewers__item-image", {
     "interviewers__item--selected-image": props.selected && props.image
   });
-  return (
-    <li className={interviewerItem}>
-      <div>
-        <img src={props.avatar} alt={props.name} />
 
-        {props.name}
-      </div>
+  return (
+    <li className={interviewerItemClass} onClick={props.setInterviewer}>
+      <img
+        className={interviewerItemImageClass}
+        src={props.avatar}
+        alt={props.name}
+      />
+      {props.name}
     </li>
   );
 }
