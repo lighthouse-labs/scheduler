@@ -158,10 +158,21 @@ storiesOf("Button", module)
      <Appointment id="last" time="1pm" />
    </Fragment> 
   ))
-  .add("Appointment Booked", () => <Appointment/> )
+  .add("Appointment Booked", () => (
+  <Fragment>
+  <Appointment
+    id={1}
+    time="12pm"
+   interview={{ student: "Lydia Miller-Jones", interviewer }}
+  />
+  <Appointment id="last" time="1pm" />
+</Fragment>
+))
+  
+  
   .add("Header", () => <Header time="12pm"/>)
   .add("Empty", () => <Empty />)
-  .add("Show", ()=> <Show />)
+  .add("Show", ()=> <Show student="Lydia Miller-Jones"  />)
   .add("Confirm", () => 
   <Confirm 
   message="Delete the appointment?" />)

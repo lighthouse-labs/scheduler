@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
-import "./Styles.scss";
+import "components/Appointment/Styles.scss";
+
 export default function Header(props) {
   const headerClass = classnames("header", {
    

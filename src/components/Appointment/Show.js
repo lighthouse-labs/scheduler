@@ -1,7 +1,14 @@
 import React from "react";
+import "components/Appointment/Styles.scss";
+
 
 export default function Show(props) {
-
+const onEdit = () => {
+  console.log("Edit button has been clicked")
+}
+const onDelete = () => {
+  console.log("Delete button has been clicked")
+}
 return (
   <main className="appointment__card appointment__card--show">
   <section className="appointment__card-left">
@@ -13,12 +20,12 @@ return (
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
-      <img onClick={props.onEdit}
+      <img onClick={onEdit}
         className="appointment__actions-button"
         src="images/edit.png"
         alt="Edit"
       />
-      <img onClick={props.onDelete}
+      <img onClick={onDelete}
         className="appointment__actions-button"
         src="images/trash.png"
         alt="Delete"
