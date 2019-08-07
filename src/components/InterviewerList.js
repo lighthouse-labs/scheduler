@@ -11,6 +11,7 @@ import classnames from "classnames";
 }
 
 export default function InterviewList(props) {
+  console.log(props);
   const listOfItems = props.interviewers.map(item => (
     <InterviewerListItem
       avatar={item.avatar}

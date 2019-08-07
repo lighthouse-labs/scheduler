@@ -4,6 +4,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Error from "components/Appointment/Error";
 import Status from "components/Appointment/Status";
+import Form from "components/Appointment/Form";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import DayList from "components/DayList";
@@ -181,5 +182,35 @@ storiesOf("Appointment", module)
       onClose={() => {
         console.log("onClose activated console log");
       }}
+    />
+  ))
+  .add("CREATE", () => (
+    <Form
+      onSave={() => {
+        console.log("on Save console log");
+      }}
+      onCancel={() => {
+        console.log("onCancel console log");
+      }}
+      name="whatever"
+      interviewer={3}
+      interviewers={interviewers}
+      setName={action("setting name")}
+      setInterviewer={action("setting Interviewer")}
+    />
+  ))
+  .add("EDIT", () => (
+    <Form
+      onSave={() => {
+        console.log("on save console log");
+      }}
+      onCancel={() => {
+        console.log("onCancel console log");
+      }}
+      name="this is working"
+      interviewer={5}
+      interviewers={interviewers}
+      setName={action("setting name")}
+      setInterviewer={action("setting Interviewer")}
     />
   ));
