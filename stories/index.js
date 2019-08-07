@@ -1,11 +1,15 @@
 import React from "react";
-
+import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Error from "components/Appointment/Error";
+import Status from "components/Appointment/Status";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import DayList from "components/DayList";
 import InterviewerList from "components/InterviewerList";
 import InterviewerListItem from "components/InterviewerListItem";
-
+import Appointment from "components/Appointment/index";
 import DayListItem from "components/DayListItem";
 //import DayList from "components/DayList";
 import Button from "components/Button";
@@ -133,5 +137,49 @@ storiesOf("InterviewerList", module)
       interviewers={interviewers}
       value={3}
       onChange={action("setInterviewer")}
+    />
+  ));
+
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Appointment Empty", () => (
+    <Empty
+      onAdd={() => {
+        console.log("hi");
+      }}
+    />
+  ))
+  .add("Appointment Show", () => (
+    <Show
+      student={"mary"}
+      interviewer={{
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png"
+      }}
+    />
+  ))
+  .add("Confirm Appointment", () => (
+    <Confirm
+      message={"Delete the appointment"}
+      onConfirm={() => {
+        console.log("onConfirmButton");
+      }}
+      onCancel={() => {
+        console.log("cancelling button");
+      }}
+    />
+  ))
+  .add("Status", () => <Status message="Deleting" />)
+  .add("Error", () => (
+    <Error
+      message="Could not delete appointment"
+      onClose={() => {
+        console.log("onClose activated console log");
+      }}
     />
   ));

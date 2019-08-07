@@ -10,6 +10,7 @@ const info = (
       src="https://i.imgur.com/LpaY82x.png"
       alt="Sylvia Palmer"
     />
+    Sylvia Palmer
   </li>
 );
 
@@ -28,7 +29,7 @@ export default function(props) {
         src={props.avatar}
         alt={props.name}
       />
-      {props.name}
+      <div>{props.selected ? props.name : ""}</div>
     </li>
   );
 }
