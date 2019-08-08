@@ -47,8 +47,19 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [today, changeDay] = useState(0);
-  const [days, setDays] = useState([]);
+  // const [today, changeDay] = useState(0);
+  // const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState({ ...prev, days });
+  const setAppointment = appointments =>
+    setState(prev => ({ ...prev, appointments }));
+  const setInterviews = appointments =>
+    setState(prev => ({ ...prev, interviews }));
 
   axios.get("http://localhost:3001/api/days").then(res => {
     setDays(res.data);
