@@ -9,7 +9,7 @@ function Error(props) {
       </section>
       <img
         onClick={props.onClose}
-        class="appointment__error-close"
+        className="appointment__error-close"
         src="images/close.png"
         alt="Close"
       />

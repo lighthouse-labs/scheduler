@@ -1,27 +1,59 @@
 import React, { useState } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
-
-const days = [
+import Appointment from "components/Appointment";
+import axios from "axios";
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2
+    time: "12pm"
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 4,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png"
+      }
+    }
   },
   {
     id: 3,
-    name: "Wednesday",
-    spots: 0
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 3,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png"
+      }
+    }
+  },
+  {
+    id: 4,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 2,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png"
+      }
+    }
   }
 ];
 
 export default function Application(props) {
   const [today, changeDay] = useState(0);
+  const [days, setDays] = useState([]);
+
+  axios.get("http://localhost:3001/api/days").then(res => {
+    setDays(res.data);
+  });
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -41,7 +73,9 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {appointments.map(appointment => {
+          return <Appointment {...appointment} />;
+        })}
       </section>
     </main>
   );
