@@ -1,28 +1,13 @@
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import InterviewerList from "./InterviewerList";
 import Appointment from "./Appointment/Index.js";
 
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+const days = [];
+
 
 const appointments = [
   {
@@ -47,9 +32,6 @@ const appointments = [
      
   },
 
-      
-     
-   
   {
     id: 4,
     time: "3pm",
@@ -62,6 +44,7 @@ const appointments = [
       }
     }
   },
+      
   {
     id: 5,
     time: "4pm",
@@ -74,6 +57,7 @@ const appointments = [
       }
     }
   },
+     
   {
     id: 6,
     time: "5pm",
@@ -86,17 +70,35 @@ const appointments = [
       }
     }
   },
-  
 ];
+   
+  
 
 export default function Application(props) {
-  const  [dayState, setDayState] = React.useState(  'Monday' )
+  const  [dayState, setDayState] = useState([])
+  const [day,setDay] = useState("Monday");
   const [interviewerState, setInterviewerState] = React.useState(  null )
   const AppointmentList = appointments.map(appointment => {
     return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={appointment.interview} />
   })
+
+
+  useEffect(()=> {
+    axios.get(`http://localhost:3001/api/days`)
+  .then(res => {
+  const dayData = res.data;
+  console.log(res.data)
+  setDayState(dayData)
   
-   console.log('state: ', dayState);
+  })
+
+
+
+
+  },[])
+    console.log(day)
+
+  
   return (
     <main className="layout">
       <section className="sidebar">
@@ -107,9 +109,9 @@ export default function Application(props) {
         />
           
         <DayList 
-          days={days}
-          day={dayState}
-          setDay={day => setDayState( day)}
+          days={dayState}
+          day={day}
+          setDay={day => setDay( day)}
         />
           
         <hr className="sidebar__separator sidebar--centered" />

@@ -11,7 +11,7 @@ export default function DayListItem(props) {
     
     return (
       
-     <li onClick={() => {if(props.setDay){props.setDay(props.name)}}} className = {daylistClass}  > 
+     <li  key={props.id} onClick={() => {if(props.setDay){props.setDay(props.name)}}} className = {daylistClass}  > 
         
                 <h2>{props.name}</h2>
       
