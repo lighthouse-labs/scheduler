@@ -13,11 +13,13 @@ function Show(props) {
       <section class="appointment__card-right">
         <section class="appointment__actions">
           <img
+            onClick={props.onEdit}
             class="appointment__actions-button"
             src="images/edit.png"
             alt="Edit"
           />
           <img
+            onClick={props.onDelete}
             class="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"

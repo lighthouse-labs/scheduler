@@ -137,7 +137,7 @@ storiesOf("InterviewerList", module)
     <InterviewerList
       interviewers={interviewers}
       value={3}
-      onChange={action("setInterviewer")}
+      setInterviewer={action("setInterviewer")}
     />
   ));
 
@@ -161,6 +161,12 @@ storiesOf("Appointment", module)
         id: 1,
         name: "Sylvia Palmer",
         avatar: "https://i.imgur.com/LpaY82x.png"
+      }}
+      onEdit={() => {
+        console.log("on Edit function in show");
+      }}
+      onDelete={() => {
+        console.log("on Delete function on show");
       }}
     />
   ))
@@ -193,10 +199,11 @@ storiesOf("Appointment", module)
         console.log("onCancel console log");
       }}
       name="whatever"
-      interviewer={3}
+      setInterviewer={action("setInterviewer")}
       interviewers={interviewers}
-      setName={action("setting name")}
-      setInterviewer={action("setting Interviewer")}
+      value={3}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
     />
   ))
   .add("EDIT", () => (
@@ -207,10 +214,18 @@ storiesOf("Appointment", module)
       onCancel={() => {
         console.log("onCancel console log");
       }}
-      name="this is working"
-      interviewer={5}
+      mode="EDIT"
+      name="JayJay"
+      setInterviewer={action("setInterviewer")}
+      value={3}
       interviewers={interviewers}
-      setName={action("setting name")}
-      setInterviewer={action("setting Interviewer")}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
     />
+  ))
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="12pm" />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
   ));

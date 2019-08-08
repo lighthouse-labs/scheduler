@@ -23,11 +23,12 @@ export default function(props) {
   });
 
   return (
-    <li className={interviewerItemClass} onClick={props.setInterviewer}>
+    <li className={interviewerItemClass}>
       <img
         className={interviewerItemImageClass}
         src={props.avatar}
         alt={props.name}
+        onClick={e => props.setInterviewer(props.interviewId)}
       />
       <div>{props.selected ? props.name : ""}</div>
     </li>

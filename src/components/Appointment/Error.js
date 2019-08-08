@@ -1,6 +1,6 @@
 import React from "react";
 
-function Error() {
+function Error(props) {
   return (
     <main class="appointment__card appointment__card--error">
       <section className="appointment__error-message">
@@ -8,6 +8,7 @@ function Error() {
         <h3 className="text--light">Could not delete appointment</h3>
       </section>
       <img
+        onClick={props.onClose}
         class="appointment__error-close"
         src="images/close.png"
         alt="Close"
