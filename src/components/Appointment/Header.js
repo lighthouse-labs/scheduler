@@ -1,18 +1,16 @@
-import React from "react";
-import classnames from "classnames";
-import "components/Appointment/Styles.scss";
+import React from 'react';
+import classnames from 'classnames';
+import 'components/Appointment/Styles.scss';
 
 export default function Header(props) {
-  const headerClass = classnames("header", {
-   
-    "appointment__time": props.time
+  const headerClass = classnames('header', {
+    appointment__time: props.time
   });
 
-  
   return (
     <header className="appointment__time">
-  <h4 className="text--semi-bold">{props.time}</h4>
-  <hr className="appointment__separator" />
-</header>
-  )
+      <h4 className="text--semi-bold">{props.time}</h4>
+      <hr className="appointment__separator" />
+    </header>
+  );
 }
