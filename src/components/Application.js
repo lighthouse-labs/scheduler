@@ -47,14 +47,6 @@ const appointments = [
     }
   }
 ];
-// const setDay = day => setState({ ...state, day });
-// const setDays = days => setState({ ...prev, days });
-
-// const setAppointment = appointments =>
-//   setState(prev => ({ ...prev, appointments }));
-
-// const setInterviews = appointments =>
-//   setState(prev => ({ ...prev, interviews }));
 
 export default function Application(props) {
   // const [today, changeDay] = useState(0);
@@ -95,7 +87,6 @@ export default function Application(props) {
 
   let appointmentDays = getAppointmentsForDay(state, state.day);
 
-  console.log("LOOK HERE RERERERE", appointmentDays);
   const appointmentList = appointmentDays.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     return (
