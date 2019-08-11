@@ -1,28 +1,66 @@
-import React from 'react';
-import axios from 'axios';
-import DayList from 'components/DayList';
-
-export function getAppointmentsForDay(state, day) {
-  let apptArray = [];
-
-  for (let d of state.days) {
-    if (d.name === day) {
-      apptArray = d.appointments;
+const getAppointmentsForDay = function(state, day) {
+  const selectedDays = state.days.find((d) => d.name === day);
+  if (selectedDays) {
+    if (selectedDays.appointments) {
+      return selectedDays.appointments.map((appt) => {
+        return state.appointments[appt];
+      });
     }
+  } else {
+    return [];
   }
-  return apptArray.map((apptId) => state.appointments[apptId]);
-}
+};
+// const appts = selectedDay ? selectedDay.appointments : [];
+// return appts ? appts.map((a) => state.appointments[a]) : [];
 
-export function getInterview(state, interview) {
-  if (interview === null) {
-    return null;
-  }
+// let apptArray = [];
+// console.log(state);
+// for (let d of state.days) {
+//   if (d.name === state.day) {
+//     apptArray = d.appointments;
+//   }
+//   return apptArray.map((apptId) => state.appointments[apptId]);
+// }
+
+const getInterview = function(state, interview) {
   console.log(state);
-  const result = {
-    student: interview.student,
-    interviewer: {
-      ...state.interviewers.data[interview.interviewer]
+  if (!interview) {
+    return null;
+  } else {
+    const foundInterview = {
+      student: interview.student,
+      interviewer: { ...state.interviewers[interview.interviewer] }
+    };
+    return foundInterview;
+  }
+};
+
+const getInterviewersForDay = function(state, day) {
+  const selectedDays = state.days.find((d) => d.name === day);
+  if (selectedDays) {
+    if (selectedDays.interviewers) {
+      return selectedDays.interviewers.map((interview) => {
+        return state.interviewers[interview];
+      });
     }
-  };
-  return result;
-}
+  } else {
+    return [];
+  }
+};
+
+// const getInterviewersForDay = function(state, day) {
+//   const selectedDay = state.days.find((d) => d.name === day);
+//   const interviewers = selectedDay ? selectedDay.interviewers : [];
+//   return interviewers ? interviewers.map((i) => state.interviewers[i]) : [];
+// };
+
+//   let apptArray = [];
+
+//   for (let d of state.days) {
+//     if (d.name === day) {
+//       apptArray = d.appointments;
+//     }
+//   }
+//   return apptArray.map((apptId) => state.appointments[apptId]);
+//
+export { getInterview, getAppointmentsForDay, getInterviewersForDay };

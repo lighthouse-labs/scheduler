@@ -2,19 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'components/Application.scss';
 import DayList from './DayList';
-import InterviewerList from './InterviewerList';
 import Appointment from './Appointment/Index.js';
-import { getAppointmentsForDay, getInterview } from 'helpers/selectors.js';
-
-const daysURL = `http://localhost:3001/api/days`;
-const apptsURL = `http://localhost:3001/api/appointments`;
-const interviewersURL = `http://localhost:3001/api/interviewers`;
-const daysAPI = axios.get(daysURL);
-const apptsAPI = axios.get(apptsURL);
-const interviewersAPI = axios.get(interviewersURL);
-const days = [];
-const appointments = [];
-const interviewers = [];
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay
+} from 'helpers/selectors.js';
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -23,35 +16,56 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-  const setDay = (day) => setState({ ...state, day });
-  const AppointmentsList = getAppointmentsForDay(state, state.day).map(
-    (appointment) => {
-      const interview = getInterview(state, appointment.interview);
-      return (
-        <Appointment
-          // pass props. these into the form
-          key={appointment.id}
-          id={appointment.id}
-          time={appointment.time}
-          interview={interview}
-        />
-      );
-    }
-  );
+
+  const setDay = (day) => setState((prev) => ({ ...prev, day }));
+  const setDays = (days) => setState((prev) => ({ ...prev, days }));
+  const setAppointments = (appointments) =>
+    setState((prev) => ({ ...prev, appointments }));
+  const setInterviewers = (interviewers) =>
+    setState((prev) => ({ ...prev, interviewers }));
+
   //API request
+
   useEffect(() => {
-    Promise.all([daysAPI, apptsAPI, interviewersAPI]).then((all) => {
-      const daysData = all[0].data;
-      const apptsData = all[1].data;
-      const interviewersData = all[2];
-      setState({
-        ...state,
-        days: daysData,
-        appointments: apptsData,
-        interviewers: interviewersData
-      });
-    });
-  }, []);
+    Promise.all([
+      axios.get(`http://localhost:3001/api/days`),
+      axios.get(`http://localhost:3001/api/appointments`),
+      axios.get('http://localhost:3001/api/interviewers')
+    ])
+      // .then((all) => {
+      //   setDays(all[0].data);
+      //   setAppointments(all[1].data);
+      //   setInterviewers(all[2].data);
+      // })
+      .then((res) => {
+        const renderState = {
+          day: state.day,
+          days: res[0].data,
+          appointments: res[1].data,
+          interviewers: res[2].data
+        };
+        setState(renderState);
+      })
+      .catch((e) => {});
+  }, [state.day]);
+
+  const appointments = getAppointmentsForDay(state, state.day);
+  const interviewersForDay = getInterviewersForDay(state, state.day);
+
+  const schedule = appointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        {...appointment}
+        interview={interview}
+        interviewers={interviewersForDay}
+      />
+    );
+  });
 
   return (
     <main className="layout">
@@ -61,11 +75,10 @@ export default function Application(props) {
           src="images/logo.png"
           alt="Interview Scheduler"
         />
-
-        <DayList days={state.days} day={state.day} setDay={setDay} />
-
         <hr className="sidebar__separator sidebar--centered" />
-        <nav className="sidebar__menu" />
+        <nav className="sidebar__menu">
+          <DayList days={state.days} day={state.day} setDay={setDay} />
+        </nav>
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
@@ -73,7 +86,10 @@ export default function Application(props) {
         />
       </section>
 
-      <section className="schedule">{AppointmentsList}</section>
+      <section className="schedule">
+        {schedule}
+        {/* <Appointment id="last" time="5pm" /> */}
+      </section>
     </main>
   );
 }

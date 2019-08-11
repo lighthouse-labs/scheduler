@@ -2,7 +2,7 @@ import React from 'react';
 import 'components/Appointment/Styles.scss';
 
 export default function Show(props) {
-  console.log(props.interview);
+  console.log(props);
   const onEdit = () => {
     console.log('Edit button has been clicked');
   };

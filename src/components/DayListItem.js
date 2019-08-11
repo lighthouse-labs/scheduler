@@ -1,25 +1,29 @@
-import React from "react";
-import classnames from 'classnames';
-import "components/DayListItem.scss";
+import React from 'react';
+import 'components/DayListItem.scss';
+const classnames = require('classnames');
 
 export default function DayListItem(props) {
-    const daylistClass = classnames("day-list__item", {
-    "day-list__item--selected" : props.selected,
-    "day-list__item--full": props.spots===0
-    
-    })
-    
-    return (
-      
-     <li  key={props.id} onClick={() => {if(props.setDay){props.setDay(props.name)}}} className = {daylistClass}  > 
-        
-                <h2>{props.name}</h2>
-      
-      {props.spots === 0 ? 'no' : props.spots } spot{props.spots !== 1 && 's'} remaining 
-     </li> 
-    )
-    
+  const daylistClass = classnames('day-list__item', {
+    'day-list__item--selected': props.selected,
+    'day-list__item--full': props.spots === 0
+  });
+  let spotsRemaining = '';
+  if (props.spots > 1) {
+    spotsRemaining = `${props.spots} spots remaining`;
+  } else if (props.spots === 1) {
+    spotsRemaining = `${props.spots} spot remaining`;
+  } else {
+    spotsRemaining = `no spots remaining`;
+  }
 
-
+  return (
+    <li
+      className={daylistClass}
+      key={props.id}
+      onClick={() => props.setDay(props.name)}
+    >
+      <h2>{props.name}</h2>
+      <p>{spotsRemaining}</p>
+    </li>
+  );
 }
-    
