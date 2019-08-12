@@ -5,9 +5,7 @@ export default function Show(props) {
   const onEdit = () => {
     console.log('Edit button has been clicked');
   };
-  const onDelete = () => {
-    console.log('Delete button has been clicked');
-  };
+
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -26,7 +24,7 @@ export default function Show(props) {
             alt="Edit"
           />
           <img
-            onClick={onDelete}
+            onClick={(evt) => props.onDelete(props.student, props.interviewer)}
             className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"

@@ -48,6 +48,7 @@ export default function Application(props) {
       });
   }, [state.day]);
 
+  //Booking an Interview
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -69,13 +70,36 @@ export default function Application(props) {
         console.log(state);
       });
   };
+  // Deleting an interview
 
+  const deleteInterview = (id, interview) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios
+      .delete(`http://localhost:3001/api/appointments/${id}`, {
+        interview: null
+      })
+      .then(() => {
+        setState({ ...state, appointments });
+      })
+      .catch((e) => {
+        console.log('error =>', e);
+        console.log(state);
+      });
+  };
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewersForDay = getInterviewersForDay(state, state.day);
   //Looping through the appointments array to attach interviews to each appointment if the exist
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    debugger;
+
     return (
       //Passing props to the Appointment component
       <Appointment
@@ -86,6 +110,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersForDay}
         bookInterview={bookInterview}
+        deleteInterview={deleteInterview}
       />
     );
   });

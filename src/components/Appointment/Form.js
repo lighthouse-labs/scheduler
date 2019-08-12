@@ -11,12 +11,7 @@ export default function Form(props) {
     setNameState('');
     setInterviewerState(null);
   };
-  // const save = () => {
-  //   setNameState(NameState);
-  //   setInterviewerState(interviewerState);
-  //   console.log('namestate --->', NameState);
-  //   console.log('interviewerState--->', interviewerState);
-  // };
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
