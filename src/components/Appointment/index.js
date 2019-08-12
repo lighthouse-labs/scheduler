@@ -94,7 +94,7 @@ export default function Appointment(props) {
       )}
       {modeTracker.mode === SHOW && (
         <Show
-          student={props.interview.student}
+          student={props.interview? props.interview.student: null}
           interviewer={interviewer}
           onTrash = {()=>{modeTracker.transition(CONFIRM)}}
           onEdit = {()=>{modeTracker.transition(CREATE)}}
