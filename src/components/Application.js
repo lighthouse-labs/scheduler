@@ -44,13 +44,23 @@ export default function Application(props) {
         };
         setState(renderState);
       })
-      .catch((e) => {
-        console.log('Error =>', e);
+      .catch((error) => {
+        console.log('Error =>', error);
       });
-  }, [state.day]);
+  }, []);
 
   const bookInterview = (id, interview) => {
-    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({ ...state, appointments });
+
+    console.log(state);
   };
 
   const appointments = getAppointmentsForDay(state, state.day);

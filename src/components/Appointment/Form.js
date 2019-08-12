@@ -45,7 +45,7 @@ export default function Form(props) {
             Cancel
           </Button>
           <Button
-            onClick={(event) => props.onSave(props.name, props.interviewer)}
+            onClick={(event) => props.onSave(NameState, interviewerState)}
             confirm={true}
           >
             Save
