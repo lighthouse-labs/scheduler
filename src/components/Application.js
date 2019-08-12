@@ -8,7 +8,7 @@ import {
   getInterview,
   getInterviewersForDay
 } from 'helpers/selectors.js';
-
+import useVisualMode from 'hooks/useVisualMode.js';
 export default function Application(props) {
   const [state, setState] = useState({
     day: 'Monday',

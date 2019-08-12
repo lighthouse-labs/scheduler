@@ -51,10 +51,7 @@ export default function Appointment(props) {
     <article>
       <Header time={props.time} />
       {mode === CONFIRM && (
-        <Confirm
-          onCancel={() => back(SHOW)}
-          onConfirm={() => transition(EMPTY)}
-        />
+        <Confirm onCancel={() => back(SHOW)} onConfirm={remove} />
       )}
       {mode === DELETING && <Status message="Deleting" />}
       {mode === SAVING && <Status message="Saving" />}
@@ -64,7 +61,9 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onEdit={props.onEdit}
-          onDelete={remove}
+          onDelete={() => {
+            transition(CONFIRM);
+          }}
         />
       )}
       {/* {mode === SHOW && <Confirm />} */}
