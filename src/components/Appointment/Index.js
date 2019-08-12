@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from 'components/Appointment/Header.js';
 import Empty from 'components/Appointment/Empty.js';
 import Show from 'components/Appointment/Show.js';
+import Status from 'components/Appointment/Status.js';
 import Form from './Form';
 import useVisualMode from 'hooks/useVisualMode.js';
 import 'components/Appointment/Styles.scss';
@@ -10,8 +11,18 @@ import 'components/InterviewerList.js';
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
+const SAVING = 'SAVING';
 
 export default function Appointment(props) {
+  const interview = { student: '', interview: null };
+  const appointment = {
+    ...state.appointment[id],
+    interview: { ...interview }
+  };
+  const save = (name, interviewer) => {
+    props.bookInterview(props.id, { student: 'bob', interviewer: 9 });
+    transition(SHOW);
+  };
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -19,6 +30,7 @@ export default function Appointment(props) {
   return (
     <article>
       <Header time={props.time} />
+      {mode === SAVING && <Status />}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
@@ -28,6 +40,7 @@ export default function Appointment(props) {
           onDelete={props.onDelete}
         />
       )}
+
       {mode === CREATE && (
         <Form
           name={props.interview ? props.interview.student : null}
@@ -36,6 +49,7 @@ export default function Appointment(props) {
           onCancel={() => {
             transition(EMPTY);
           }}
+          onSave={save}
         />
       )}
     </article>

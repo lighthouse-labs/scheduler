@@ -11,12 +11,12 @@ export default function Form(props) {
     setNameState('');
     setInterviewerState(null);
   };
-  const save = () => {
-    setNameState(NameState);
-    setInterviewerState(interviewerState);
-    console.log('namestate --->', NameState);
-    console.log('interviewerState--->', interviewerState);
-  };
+  // const save = () => {
+  //   setNameState(NameState);
+  //   setInterviewerState(interviewerState);
+  //   console.log('namestate --->', NameState);
+  //   console.log('interviewerState--->', interviewerState);
+  // };
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -24,24 +24,30 @@ export default function Form(props) {
           <input
             onChange={(evt) => setNameState(evt.target.value)}
             className="appointment__create-input text--semi-bold"
-            name="name"
+            name={NameState}
             type="text"
             value={NameState}
             placeholder="Enter Student Name"
           />
         </form>
         <InterviewerList
+          className="interviewers"
           interviewers={props.interviewers}
           interviewer={props.interviewer}
           setInterviewer={setInterviewerState}
+          onChange={setInterviewerState}
+          value={interviewerState}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={props.onCancel} danger>
+          <Button onClick={props.onCancel} danger={true}>
             Cancel
           </Button>
-          <Button onClick={save} confirm>
+          <Button
+            onClick={(event) => props.onSave(props.name, props.interviewer)}
+            confirm={true}
+          >
             Save
           </Button>
         </section>
