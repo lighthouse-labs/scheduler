@@ -16,8 +16,14 @@ const SAVING = 'SAVING';
 export default function Appointment(props) {
   const save = (name, interviewer) => {
     const interview = { student: name, interviewer };
-    props.bookInterview(props.id, interview);
-    transition(SHOW);
+    props
+      .bookInterview(props.id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch((e) => {
+        console.log('Error => ', e);
+      });
   };
 
   const { mode, transition, back } = useVisualMode(

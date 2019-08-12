@@ -7,12 +7,12 @@ export default function useVisualMode(value) {
   return {
     mode: mode,
     transition: (newMode, replace) => {
-      // setMode(newMode);
+      setMode(newMode);
       if (replace) {
-        setHistory([...history]);
+        setHistory([...history.slice(0, history.length - 1), mode]);
       } else {
         // setMode(newMode);
-        setHistory([mode, ...history]);
+        setHistory([...history, mode]);
       }
       setMode(newMode);
     },
