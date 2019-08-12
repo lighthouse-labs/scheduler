@@ -3,14 +3,14 @@ import Button from "../../components/Button";
 import InterviewerList from "../../components/InterviewerList";
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
-  const [interviewer, setInterviewer] = useState(null);
+  const [interviewer, setInterviewer] = useState(props.name? props.interviewerID:null);
   function reset() {
     setName("");
     setInterviewer(null);
 
     props.onCancel();
   }
-
+  
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -41,8 +41,9 @@ export default function Form(props) {
           <Button
             confirm
             onClick={() => {
-              console.log(name, interviewer);
-              reset();
+              
+              props.onSave(name, interviewer);
+              
             }}>
             Save
           </Button>

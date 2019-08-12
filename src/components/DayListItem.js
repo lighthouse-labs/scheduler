@@ -12,7 +12,8 @@ export default function DayListItem(props) {
     <div
       className={buttonClass}
       onClick={() => {
-        props.setDay(props.name);
+        console.log('previous day is ', props.state.day)
+        props.setDay();
       }}>
       <div>
         <h1>{props.name}</h1>
