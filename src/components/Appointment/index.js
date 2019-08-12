@@ -6,7 +6,8 @@ import Header from "components/Appointment/header";
 import useVisualMode from "../../hooks/useVisualMode";
 import Form from "components/Appointment/Form.js";
 import Status from "components/Appointment/Status.js";
-import Confirm from "components/Appointment/Confirm.js"
+import Confirm from "components/Appointment/Confirm.js";
+import Error from "components/Appointment/Error.js";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -14,6 +15,8 @@ const CREATE = "CREATE";
 const SAVE = "SAVE";
 const CONFIRM = "CONFIRM";
 const DELETE = "DELETE"
+const ERROR_DELETE = "ERROR_DELETE";
+const ERROR_SAVE = "ERROR_SAVE";
 
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
@@ -45,7 +48,7 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview).then(()=>{
       //console.log("BOOK INTERVIEW SHOW",interview);
       modeTracker.transition(SHOW);
-    })
+    }).catch(()=>{modeTracker.transition(ERROR_SAVE)})
     modeTracker.transition(SAVE);
     
     console.log("save triggered")
@@ -53,7 +56,9 @@ export default function Appointment(props) {
   function onDelete(){
     props.deleteInterview(props.id, props.time).then(()=>{
       modeTracker.transition(EMPTY);
-    })
+    }).catch((error)=>{
+      console.log("ERROROROROOROROOROROROROROOROROR", error);
+      modeTracker.transition(ERROR_DELETE)})
     modeTracker.transition(DELETE);
   }
 
@@ -115,7 +120,8 @@ export default function Appointment(props) {
       {modeTracker.mode === SAVE && <Status message = {"SAVING"} />}
       {modeTracker.mode === DELETE && <Status message = {"DELETING"} />}
       {modeTracker.mode === CONFIRM && <Confirm onCancel={()=>{modeTracker.transition(SHOW)}} onConfirm ={()=>{onDelete()}}/>}
-          
+      {modeTracker.mode === ERROR_DELETE && <Error message= {"Could not delete appointment"} onClose = {()=>modeTracker.transition(SHOW)} />}
+      {modeTracker.mode === ERROR_SAVE && <Error message= {"Could not save appointment"} onClose = {()=>modeTracker.transition(SHOW)} />}
     </div>
   );
 }
