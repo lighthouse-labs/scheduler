@@ -10,6 +10,7 @@ export default function Form(props) {
   const reset = () => {
     setNameState('');
     setInterviewerState(null);
+    props.onCancel();
   };
 
   return (
@@ -36,7 +37,7 @@ export default function Form(props) {
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button onClick={props.onCancel} danger={true}>
+          <Button danger={true} onClick={reset}>
             Cancel
           </Button>
           <Button

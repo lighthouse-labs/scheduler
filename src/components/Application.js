@@ -8,7 +8,7 @@ import {
   getInterview,
   getInterviewersForDay
 } from 'helpers/selectors.js';
-import useVisualMode from 'hooks/useVisualMode.js';
+
 export default function Application(props) {
   const [state, setState] = useState({
     day: 'Monday',
@@ -67,33 +67,29 @@ export default function Application(props) {
       })
       .catch((e) => {
         console.log('error =>', e);
-        console.log(state);
       });
   };
   // Deleting an interview
 
-  const deleteInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
+  const deleteInterview = (id, time) => {
+    const emptyAppointment = {
+      id: id,
+      interview: null,
+      time: time
     };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
     return axios
-      .delete(`http://localhost:3001/api/appointments/${id}`, {
-        interview: null
-      })
+      .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
-        setState({ ...state, appointments });
+        setState({
+          ...state,
+          appointments: { ...state.appointments, [id]: emptyAppointment }
+        });
       })
       .catch((e) => {
         console.log('error =>', e);
-        console.log(state);
       });
   };
+
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewersForDay = getInterviewersForDay(state, state.day);
   //Looping through the appointments array to attach interviews to each appointment if the exist

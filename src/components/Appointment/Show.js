@@ -2,10 +2,6 @@ import React from 'react';
 import 'components/Appointment/Styles.scss';
 
 export default function Show(props) {
-  const onEdit = () => {
-    console.log('Edit button has been clicked');
-  };
-
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -18,7 +14,7 @@ export default function Show(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <img
-            onClick={onEdit}
+            onClick={(evt) => props.onEdit(props.student, props.interviewer)}
             className="appointment__actions-button"
             src="images/edit.png"
             alt="Edit"
