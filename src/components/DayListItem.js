@@ -3,11 +3,12 @@ import 'components/DayListItem.scss';
 const classnames = require('classnames');
 
 export default function DayListItem(props) {
+  console.log(props);
   const daylistClass = classnames('day-list__item', {
     'day-list__item--selected': props.selected,
     'day-list__item--full': props.spots === 0
   });
-  let spotsRemaining = '';
+  let spotsRemaining = `${props.spots}`;
   if (props.spots > 1) {
     spotsRemaining = `${props.spots} spots remaining`;
   } else if (props.spots === 1) {

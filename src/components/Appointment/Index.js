@@ -67,7 +67,9 @@ export default function Appointment(props) {
       )}
       {mode === DELETING && <Status message="Deleting" />}
       {mode === SAVING && <Status message="Saving" />}
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === EMPTY && props.time !== '5pm' && (
+        <Empty onAdd={() => transition(CREATE)} />
+      )}
       {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}

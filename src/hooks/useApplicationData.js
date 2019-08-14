@@ -58,20 +58,22 @@ export default function useApplicationData() {
   function setInterview(id, interview) {
     dispatch({ type: SET_INTERVIEW, id: id, interview: interview });
   }
-
-  useEffect(() => {
+  const resetState = function() {
     Promise.all([
       axios.get(`http://localhost:3001/api/days`),
       axios.get(`http://localhost:3001/api/appointments`),
       axios.get('http://localhost:3001/api/interviewers')
     ])
-
       .then((res) => {
         setApplicationData(res[0].data, res[1].data, res[2].data);
       })
       .catch((error) => {
         console.log('Error =>', error);
       });
+  };
+
+  useEffect(() => {
+    resetState();
   }, [state.day]);
 
   const bookInterview = (id, interview) => {
@@ -81,6 +83,7 @@ export default function useApplicationData() {
       })
       .then(() => {
         setInterview(id, interview);
+        resetState();
       })
       .catch((e) => {
         console.log('error =>', e);
@@ -92,6 +95,7 @@ export default function useApplicationData() {
       .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
         setInterview(id, null);
+        resetState();
       })
       .catch((e) => {
         console.log('error =>', e);
