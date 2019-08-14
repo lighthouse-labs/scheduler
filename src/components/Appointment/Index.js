@@ -5,6 +5,7 @@ import Show from 'components/Appointment/Show.js';
 import Status from 'components/Appointment/Status.js';
 import Confirm from 'components/Appointment/Confirm.js';
 import Form from './Form';
+import Error from 'components/Appointment/Error.js';
 import useVisualMode from 'hooks/useVisualMode.js';
 import 'components/Appointment/Styles.scss';
 import 'components/InterviewerList.js';
@@ -63,6 +64,18 @@ export default function Appointment(props) {
           message="Are you sure you want to Delete the appointment?"
           onCancel={() => back(SHOW)}
           onConfirm={remove}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message="The appointment could not be saved"
+          onClose={() => back(CREATE)}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="The appointment could not be deleted"
+          onClose={() => back(SHOW)}
         />
       )}
       {mode === DELETING && <Status message="Deleting" />}
