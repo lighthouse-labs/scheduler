@@ -9,6 +9,7 @@ import useVisualMode from 'hooks/useVisualMode.js';
 import 'components/Appointment/Styles.scss';
 import 'components/InterviewerList.js';
 
+//Defining the names for each of the possible modes when performing site actions
 const EMPTY = 'EMPTY';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
@@ -20,11 +21,10 @@ const ERROR_SAVE = 'ERROR_SAVE';
 const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(props) {
-  console.log('Props!=>', props);
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-
+  //Function for booking appointments in the schedule
   const save = (name, interviewer) => {
     const interview = { student: name, interviewer };
     transition(SAVING);
@@ -35,7 +35,7 @@ export default function Appointment(props) {
       })
       .catch((error) => transition(ERROR_SAVE, true));
   };
-
+  //Function for removing booked appointments in the schedule
   const remove = (event) => {
     transition(DELETING, true);
     props
@@ -45,7 +45,7 @@ export default function Appointment(props) {
       })
       .catch((error) => transition(ERROR_DELETE, true));
   };
-
+  //Handling the transitions between views
   useEffect(() => {
     if (props.interview && mode === EMPTY) {
       transition(SHOW);
@@ -54,7 +54,7 @@ export default function Appointment(props) {
       transition(EMPTY);
     }
   }, [transition, props.interview, mode]);
-
+  //JSX that renders each of the views for user actions when booking editing and deleting appointments
   return (
     <article>
       <Header time={props.time} />

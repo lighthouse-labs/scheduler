@@ -19,11 +19,12 @@ export default function Application(props) {
 
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewersForDay = getInterviewersForDay(state, state.day);
+  // Mapping through the appointments array and appending the corresponding interviews to each
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
     return (
-      //Passing props to the Appointment component
+      // JSX: Passing props to the Appointment component
       <Appointment
         key={appointment.id}
         id={appointment.id}
@@ -36,7 +37,7 @@ export default function Application(props) {
       />
     );
   });
-
+  // JSX that renders the elements for the sidebar and schedule layouts
   return (
     <main className="layout">
       <section className="sidebar">

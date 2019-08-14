@@ -1,6 +1,7 @@
 import React from 'react';
 import 'components/Appointment/Styles.scss';
 
+// Component that renders when an existing appointment can be interacted with
 export default function Show(props) {
   return (
     <main className="appointment__card appointment__card--show">

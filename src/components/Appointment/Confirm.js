@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'components/Button.js';
-import useVisualMode from 'hooks/useVisualMode';
+
+// Component that confirms the delete action taken by the user or cancels the action
 export default function Confirm(props) {
   return (
     <main className="appointment__card appointment__card--confirm">

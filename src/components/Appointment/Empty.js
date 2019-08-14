@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Component that displays an empty appointment slot
 export default function Empty(props) {
   return (
     <main className="appointment__add">

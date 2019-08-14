@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 export default function useApplicationData() {
-  const [state, setState] = useState({
+  const SET_DAY = 'SET_DAY';
+  const SET_APPLICATION_DATA = 'SET_APPLICATION_DATA';
+  const SET_INTERVIEW = 'SET_INTERVIEW';
+  const [state, dispatch] = useReducer(reducer, {
     day: 'Monday',
     days: [],
     appointments: {},
@@ -10,12 +13,51 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-  const setDay = (day) => setState((prev) => ({ ...prev, day }));
-  // const setDays = (days) => setState((prev) => ({ ...prev, days }));
-  // const setAppointments = (appointments) =>
-  //   setState((prev) => ({ ...prev, appointments }));
-  // const setInterviewers = (interviewers) =>
-  //   setState((prev) => ({ ...prev, interviewers }));
+  //  action represents an object taking on the new state object.
+  function reducer(state, action) {
+    switch (action.type) {
+      case SET_DAY:
+        return { ...state, day: action.day };
+
+      case SET_APPLICATION_DATA:
+        return {
+          ...state,
+          days: action.days,
+          appointments: action.appointments,
+          interviewers: action.interviewers
+        };
+      case SET_INTERVIEW: {
+        const currentAppointments = state.appointments;
+        const updatedAppointments = {
+          ...currentAppointments,
+          [action.id]: {
+            ...currentAppointments[action.id],
+            interview: action.interview
+          }
+        };
+        return { ...state, appointments: updatedAppointments };
+      }
+
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+    }
+  }
+  function setDay(day) {
+    dispatch({ type: SET_DAY, day: day });
+  }
+  function setApplicationData(days, appointments, interviewers) {
+    dispatch({
+      type: SET_APPLICATION_DATA,
+      days: days,
+      appointments: appointments,
+      interviewers: interviewers
+    });
+  }
+  function setInterview(id, interview) {
+    dispatch({ type: SET_INTERVIEW, id: id, interview: interview });
+  }
 
   useEffect(() => {
     Promise.all([
@@ -25,13 +67,7 @@ export default function useApplicationData() {
     ])
 
       .then((res) => {
-        const renderState = {
-          day: state.day,
-          days: res[0].data,
-          appointments: res[1].data,
-          interviewers: res[2].data
-        };
-        setState(renderState);
+        setApplicationData(res[0].data, res[1].data, res[2].data);
       })
       .catch((error) => {
         console.log('Error =>', error);
@@ -39,39 +75,23 @@ export default function useApplicationData() {
   }, [state.day]);
 
   const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
     return axios
       .put(`http://localhost:3001/api/appointments/${id}`, {
         interview: interview
       })
       .then(() => {
-        setState({ ...state, appointments });
+        setInterview(id, interview);
       })
       .catch((e) => {
         console.log('error =>', e);
       });
   };
 
-  const deleteInterview = (id, time) => {
-    const emptyAppointment = {
-      id: id,
-      interview: null,
-      time: time
-    };
+  const deleteInterview = (id) => {
     return axios
       .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
-        setState({
-          ...state,
-          appointments: { ...state.appointments, [id]: emptyAppointment }
-        });
+        setInterview(id, null);
       })
       .catch((e) => {
         console.log('error =>', e);
@@ -85,48 +105,3 @@ export default function useApplicationData() {
     deleteInterview
   };
 }
-
-//   const interviewers = getInterviewersForDay(state, state.day);
-
-//   const appointments = getAppointmentsForDay(state, state.day).map(
-//     (appointment) => {
-//       return (
-//         <Appointment
-//           key={appointment.id}
-//           {...appointment}
-//           interview={getInterview(state, appointment.interview)}
-//           interviewers={interviewers}
-//           bookInterview={bookInterview}
-//           deleteInterview={deleteInterview}
-//         />
-//       );
-//     }
-//   );
-
-//   return (
-//     <main className="layout">
-//       <section className="sidebar">
-//         <img
-//           className="sidebar--centered"
-//           src="images/logo.png"
-//           alt="Interview Scheduler"
-//         />
-//         <hr className="sidebar__seperator sidebar--centered" />
-//         <nav className="sidebar__menu">
-//           <DayList days={state.days} day={state.day} setDay={setDay} />
-//         </nav>
-//         <img
-//           className="sidebar__lhl sidebar--centered"
-//           src="images/lhl.png"
-//           alt="lighthouse labs"
-//         />
-//       </section>
-//       <section className="schedule">
-//         <section className="schedule">
-//           {appointments}
-//           <Appointment key="last" time="5pm" />
-//         </section>
-//       </section>
-//     </main>
-//   );
-// }
