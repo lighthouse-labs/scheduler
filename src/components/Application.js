@@ -8,7 +8,6 @@ import {
   getAppointmentsForDay,
   getInterview,
   getInterviewersForDay
-  // getAvailableSpotsForDay
 } from 'helpers/selectors.js';
 
 export default function Application(props) {
@@ -22,7 +21,7 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
-  // Mapping through the appointments array and appending the corresponding interviews to each
+  // Renders an Appointment element with either an interview set to null or with a new interview object(see getInterview)
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 

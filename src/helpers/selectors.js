@@ -1,8 +1,10 @@
+// Returns an array of appointment objects for each day
 const getAppointmentsForDay = function(state, day) {
-  const selectedDays = state.days.find((d) => d.name === day);
-  if (selectedDays) {
-    if (selectedDays.appointments) {
-      return selectedDays.appointments.map((appt) => {
+  const foundday = state.days.filter((d) => d.name === day)[0];
+
+  if (foundday) {
+    if (foundday.appointments) {
+      return foundday.appointments.map((appt) => {
         return state.appointments[appt];
       });
     }
@@ -10,7 +12,7 @@ const getAppointmentsForDay = function(state, day) {
     return [];
   }
 };
-
+// Returns a new interview object
 const getInterview = function(state, interview) {
   if (!interview) {
     return null;
@@ -22,7 +24,7 @@ const getInterview = function(state, interview) {
     return foundInterview;
   }
 };
-
+// Returns an array of interviewer IDs based on the selected day
 const getInterviewersForDay = function(state, day) {
   const selectedDays = state.days.find((d) => d.name === day);
   if (selectedDays) {

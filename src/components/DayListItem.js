@@ -1,9 +1,9 @@
 import React from 'react';
 import 'components/DayListItem.scss';
 const classnames = require('classnames');
-
+// Days are rendered with the number of available Appointment spots remaining
+// The Day state is set using the set Day function onClick
 export default function DayListItem(props) {
-  console.log(props);
   const daylistClass = classnames('day-list__item', {
     'day-list__item--selected': props.selected,
     'day-list__item--full': props.spots === 0
