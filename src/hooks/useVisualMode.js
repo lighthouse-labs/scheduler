@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+// Hook for creating the visual flow through the user inputs
 export default function useVisualMode(value) {
   const [mode, setMode] = useState(value);
   const [history, setHistory] = useState([]);
@@ -11,7 +11,6 @@ export default function useVisualMode(value) {
       if (replace) {
         setHistory([...history.slice(0, history.length - 1), mode]);
       } else {
-        // setMode(newMode);
         setHistory([...history, mode]);
       }
       setMode(newMode);

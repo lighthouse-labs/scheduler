@@ -1,7 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 
 import useVisualMode from 'hooks/useVisualMode.js';
-import { exportAllDeclaration } from '@babel/types';
 
 const FIRST = 'FIRST';
 const SECOND = 'SECOND';

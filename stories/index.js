@@ -19,13 +19,14 @@ import Status from 'components/Appointment/Status.js';
 import Error from 'components/Appointment/Error.js';
 import Form from 'components/Appointment/Form.js';
 
+// Storybook versions of each rendered component for testing functionality and style in isolation from main code base
+
 storiesOf('Button', module)
   .addParameters({
     backgrounds: [{ name: 'dark', value: '#222f3e', default: true }]
   })
   .add('Base', () => <Button onClick={action('button-clicked')}>Base</Button>)
   .add('Confirm', () => (
-    /* Declaring the name of the button after the action will apply the styles */
     <Button confirm onClick={action('button-clicked')}>
       Confirm
     </Button>
