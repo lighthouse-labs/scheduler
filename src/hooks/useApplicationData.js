@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
@@ -12,12 +12,13 @@ export default function useApplicationData() {
 			case SET_APPLICATION_DATA:
 				return {
 					...state,
+					trigger: false,
 					appointments: action.appointments,
 					days: action.days,
 					interviewers: action.interviewers
 				};
 			case SET_INTERVIEW: {
-				return { ...state, appointments: action.appointments };
+				return { ...state, trigger: true, appointments: action.appointments };
 			}
 
 			default:
@@ -27,42 +28,31 @@ export default function useApplicationData() {
 		}
 	}
 
-	// const [state, dispatch] = useReducer()
-
 	const [state, dispatch] = useReducer(reducer, {
 		day: "Tuesday",
 		days: [],
 		appointments: {},
 		interviewers: {}
 	});
+
+	const [number, count] = useState(0);
+
 	useEffect(() => {
 		Promise.all([
 			axios.get("http://localhost:3001/api/days"),
 			axios.get("http://localhost:3001/api/appointments"),
 			axios.get("http://localhost:3001/api/interviewers")
 		]).then(all => {
-			//   let combinedPull = {
-			//     day: state.day,
-			//     days: all[0].data,
-			//     appointments: all[1].data,
-			//     interviewers: all[2].data
-			//   };
-			//   setState(combinedPull);
-
-			//   dispatch({type: SET_APPLICATION_DATA, combinedPull})
 			dispatch({
+				trigger: false,
 				type: SET_APPLICATION_DATA,
 				appointments: all[1].data,
-				days: all[0].data,
-				interviewers: all[2].data
+				interviewers: all[2].data,
+				days: all[0].data
 			});
 			// let getInterview = selector.getInterview(state, interviewers);
 		}); // calling api whenever state changes. needs work
-	}, [state]);
-
-	// function setDay(day){
-	//     setState({...state, day: day})
-	// }{...state, appointments: {...state.appointments, [id]: interview}
+	}, [state.trigger]);
 
 	function bookInterview(id, interview) {
 		return axios
