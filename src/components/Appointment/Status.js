@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Component that displays a message describing an action that is taking place "Saving" or "Deleting" for example
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">
