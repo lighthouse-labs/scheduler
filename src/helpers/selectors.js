@@ -29,9 +29,9 @@ const getInterviewersForDay = function(state, day) {
   const foundday = state.days.filter((d) => d.name === day)[0];
 
   if (foundday) {
-    if (foundday.appointments) {
-      return foundday.appointments.map((appt) => {
-        return state.appointments[appt];
+    if (foundday.interviewers) {
+      return foundday.interviewers.map((interview) => {
+        return state.interviewers[interview];
       });
     }
   } else {
