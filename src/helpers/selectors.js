@@ -26,11 +26,12 @@ const getInterview = function(state, interview) {
 };
 // Returns an array of interviewer IDs based on the selected day
 const getInterviewersForDay = function(state, day) {
-  const selectedDays = state.days.find((d) => d.name === day);
-  if (selectedDays) {
-    if (selectedDays.interviewers) {
-      return selectedDays.interviewers.map((interview) => {
-        return state.interviewers[interview];
+  const foundday = state.days.filter((d) => d.name === day)[0];
+
+  if (foundday) {
+    if (foundday.appointments) {
+      return foundday.appointments.map((appt) => {
+        return state.appointments[appt];
       });
     }
   } else {
