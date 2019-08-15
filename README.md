@@ -32,5 +32,6 @@ Both of these dependecies must be installed as at least version 16.9.0 to be com
 
 ## Screenshots
 
-!["Scheduler - Add Appointment"](https://github.com/SimonGarber/scheduler/blob/master/docs/LHL_Scheduler_Project_Add_Appointment.png)
+![Scheduler - Add Appointment](https://github.com/SimonGarber/scheduler/blob/master/docs/LHL_Scheduler_Project_Add_Appointment.png)
 
+![Scheduler - Delete Appointment](https://github.com/SimonGarber/scheduler/blob/master/docs/LHL_Scheduler_Project_Delete_Appointment.png)
