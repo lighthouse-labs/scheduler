@@ -80,7 +80,7 @@ export default function Appointment(props) {
       )}
       {mode === DELETING && <Status message="Deleting" />}
       {mode === SAVING && <Status message="Saving" />}
-      {mode === EMPTY && props.time !== '5pm' && (
+      {mode === EMPTY && props.time !== '10pm' && (
         <Empty onAdd={() => transition(CREATE)} />
       )}
       {mode === SHOW && props.interview && (
