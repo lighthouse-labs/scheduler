@@ -8,6 +8,7 @@ export default function DayListItem(props) {
     'day-list__item--selected': props.selected,
     'day-list__item--full': props.spots === 0
   });
+
   let spotsRemaining = `${props.spots}`;
   if (props.spots > 1) {
     spotsRemaining = `${props.spots} spots remaining`;

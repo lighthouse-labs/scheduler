@@ -29,15 +29,16 @@ export default function useApplicationData() {
         };
       // Brings in state and appends an interview to the appointments object
       case SET_INTERVIEW: {
-        const currentAppointments = state.appointments;
-        const updatedAppointments = {
-          ...currentAppointments,
-          [action.id]: {
-            ...currentAppointments[action.id],
-            interview: action.interview
-          }
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: action.interview
         };
-        return { ...state, appointments: updatedAppointments };
+
+        const appointments = {
+          ...state.appointments,
+          [action.id]: appointment
+        };
+        return { ...state, appointments: appointments };
       }
 
       default:
@@ -61,8 +62,8 @@ export default function useApplicationData() {
   function setInterview(id, interview) {
     dispatch({ type: SET_INTERVIEW, id: id, interview: interview });
   }
-  // Helper function that runs the Axios request and reducer function to reset the state after each reducer function is called
-  const resetState = function() {
+
+  useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:3001/api/days`),
       axios.get(`http://localhost:3001/api/appointments`),
@@ -74,10 +75,6 @@ export default function useApplicationData() {
       .catch((error) => {
         console.log('Error =>', error);
       });
-  };
-
-  useEffect(() => {
-    resetState();
   }, [state.day]);
   // New Appointments being booked trigger this function
   const bookInterview = (id, interview) => {
@@ -87,7 +84,6 @@ export default function useApplicationData() {
       })
       .then(() => {
         setInterview(id, interview);
-        resetState();
       })
       .catch((e) => {
         console.log('error =>', e);
@@ -99,7 +95,6 @@ export default function useApplicationData() {
       .delete(`http://localhost:3001/api/appointments/${id}`)
       .then(() => {
         setInterview(id, null);
-        resetState();
       })
       .catch((e) => {
         console.log('error =>', e);
