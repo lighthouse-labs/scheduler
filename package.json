@@ -5,8 +5,8 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "normalize.css": "^8.0.1",
-    "react": "^16.9.0-alpha.0",
-    "react-dom": "^16.9.0-alpha.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-scripts": "3.0.0"
   },
   "scripts": {
@@ -14,7 +14,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 8080 -s public --ci",
+    "storybook": "start-storybook -p 9009 -s public --ci",
     "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
