@@ -43,7 +43,8 @@
   },
   "jest": {
     "watchPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/.git/"
     ]
   }
 }
