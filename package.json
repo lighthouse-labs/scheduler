@@ -38,7 +38,7 @@
     "@storybook/react": "^5.0.10",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
-    "babel-loader": "^8.0.5",
+    "babel-loader": "8.1.0",
     "sass": "^1.53.0"
   },
   "jest": {
